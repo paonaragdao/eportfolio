@@ -1,0 +1,183 @@
+<%- include("partials/header"); -%>
+<html>
+
+
+<h1>Hi, I am Pao</h1>
+<p> <%=startingContent%> </p>
+
+<hr>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+</style>
+
+<section id="skills">
+
+  <div class="container-fluid">
+
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#" onclick="jump('editor-tab')">Editor</a></li>
+      <li class="list-inline-item"><a href="#" onclick="jump('photographer-tab')">Photographer</a></li>
+      <li class="list-inline-item"><a href="#" onclick="jump('cinematographer-tab')">Cinematographer</a></li>
+      <li class="list-inline-item"><a href="#" onclick="jump('contentcreator-tab')">Content Creator</a></li>
+      <li class="list-inline-item"><a href="#" onclick="jump('frontenddev-tab')">Front End Developer</a></li>
+    </ul>
+
+  </div>
+
+</section>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+<div>
+  <div id="editor-tab">
+    <%- include("editor"); -%>
+  </div>
+  <div id="photographer-tab">
+    <%- include("photographer"); -%>
+  </div>
+  <div id="cinematographer-tab">
+    <%- include("cinematographer"); -%>
+  </div>
+  <div id="contentcreator-tab">
+    <%- include("contentcreator"); -%>
+  </div>
+  <div id="frontenddev-tab">
+    <%- include("frontenddev"); -%>
+  </div>
+</div>
+
+
+<button onclick="topFunction()" id="topBtn" title="Go to top"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+</svg></button>
+
+<script>
+$(window).on("load",function() {
+  function fade(pageLoad) {
+    var windowTop=$(window).scrollTop(), windowBottom=windowTop+$(window).innerHeight();
+    var min=0.3, max=1, threshold=0.05;
+
+    $("#fade").each(function() {
+      /* Check location of element */
+      var objectHeight=$(this).outerHeight(), objectTop=$(this).offset().top, objectBottom=$(this).offset().top+objectHeight;
+
+      /* Fade element in/out based on its visible percentage */
+      if (objectTop < windowTop) {
+        if (objectBottom > windowTop) {$(this).fadeTo(0,min+((max-min)*((objectBottom-windowTop)/objectHeight)));}
+        else if ($(this).css("opacity")>=min+threshold || pageLoad) {$(this).fadeTo(0,min);}
+      } else if (objectBottom > windowBottom) {
+        if (objectTop < windowBottom) {$(this).fadeTo(0,min+((max-min)*((windowBottom-objectTop)/objectHeight)));}
+        else if ($(this).css("opacity")>=min+threshold || pageLoad) {$(this).fadeTo(0,min);}
+      } else if ($(this).css("opacity")<=max-threshold || pageLoad) {$(this).fadeTo(0,max);}
+    });
+  } fade(true); //fade elements on page-load
+  $(window).scroll(function(){fade(false);}); //fade elements on scroll
+});
+
+//anchor link
+
+function jump(h) {
+    var top = document.getElementById(h).offsetTop,
+        left = document.getElementById(h).offsetLeft;
+    var animator = createAnimator({
+        start: [0,0],
+        end: [left, top],
+        duration: 1000
+    }, function(vals){
+        console.log(arguments);
+    	window.scrollTo(vals[0], vals[1]);
+    });
+
+    //run
+    animator();
+}
+
+
+
+//Animator
+//Licensed under the MIT License
+function createAnimator(config, callback, done) {
+    if (typeof config !== "object") throw new TypeError("Arguement config expect an Object");
+
+    var start = config.start,
+        mid = $.extend({}, start), //clone object
+        math = $.extend({}, start), //precalculate the math
+        end = config.end,
+        duration = config.duration || 1000,
+        startTime, endTime;
+
+    //t*(b-d)/(a-c) + (a*d-b*c)/(a-c);
+    function precalculate(a, b, c, d) {
+        return [(b - d) / (a - c), (a * d - b * c) / (a - c)];
+    }
+
+    function calculate(key, t) {
+        return t * math[key][0] + math[key][1];
+    }
+
+    function step() {
+        var t = Date.now();
+        var val = end;
+        if (t < endTime) {
+            val = mid;
+            for (var key in mid) {
+                mid[key] = calculate(key, t);
+            }
+            callback(val);
+            requestAnimationFrame(step);
+        } else {
+            callback(val);
+            done && done();
+        }
+    }
+
+    return function () {
+        startTime = Date.now();
+        endTime = startTime + duration;
+
+        for (var key in math) {
+            math[key] = precalculate(startTime, start[key], endTime, end[key]);
+        }
+
+        step();
+    }
+}
+
+//Get the button
+var mybutton = document.getElementById("topBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+
+</script>
+
+
+
+
+
+
+
+<%- include("partials/footer"); -%>
+
+</html>

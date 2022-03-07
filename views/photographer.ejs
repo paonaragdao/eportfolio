@@ -1,0 +1,31 @@
+<body>
+  <div class="container">
+</div>
+<h1>Photographer</h1>
+<hr>
+<div id="quad">
+  <figure>
+  <img src="https://lh3.googleusercontent.com/4a_CESLG-CGnYCvttkFV-ckqYct1XmB7Frh1_ycB-RuuFvj-C_mCB9pu3ANSUruammzlKzte1PuCloVtaMRTp_A-ubbMxtbzwSOcpao28gZgT0o6SCrN_NcB69h3s85rRJCVYCKx_g=w2400" alt="kahel.jpg">
+  <figcaption>Kahel</figcaption>
+  </figure>
+  <figure>
+    <img src="https://lh3.googleusercontent.com/3ij8vrbPwOfjydOr_RK4KFmkyVN9qh8tuxRSdFQt1Q58lPgVgzlDF-pxliaPO5aztZvY0gyjdbn65tlwIbQ25g9ZXkagtF-QrmDwct4aY6G5FjfDQOc9fQE55EnrY3TvpHG26XWACQ=w2400" alt="Micler.jpg">
+    <figcaption>Micler</figcaption>
+  </figure>
+  <figure>
+    <img src="https://lh3.googleusercontent.com/82vTQSAy4LAi0FMKQ7n4GcaYuGO4Tjv1J4TiUW66yLz5bGPjUHqBmwBzD4GnIE8AM30aeNnYb4vWqIWxBPGCBLR7pc6I5wjFukqLJo60yGCnNyKVvyJ6hu0AMJ9S0dK7qLyC3l-qig=w2400" alt="Afterlight.jpg">
+    <figcaption>Afterlight</figcaption>
+  </figure>
+  <figure>
+    <img src="https://lh3.googleusercontent.com/ASXMA2kchZXLn3uiiCxElESQcnMbXKoJNjoYNqjuvDesKljHKbEX0kePbZqb952l4KhlsAAZRwmWxLGqcWQK9oqCeUP7AauTWjmY9XglPfeePRcYVfe-_b5FZD6bVgbWfBr3vb3aBA=w2400" alt="Opera.jpg">
+    <figcaption>Opera</figcaption>
+  </figure>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+  var quadimages = document.querySelectorAll("#quad figure");
+for(i=0; i<quadimages.length; i++) {
+  quadimages[i].addEventListener('click', function(){ this.classList.toggle("expanded"); quad.classList.toggle("full") });
+}
+</script>
